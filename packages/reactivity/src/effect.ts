@@ -45,8 +45,10 @@ export function traceEffect(effect, dep) {
 
 export function triggerEffects(dep) {
   for (const effect of dep.keys()) {
-    if (effect.scheduler) {
-      effect.scheduler()
+    if (!effect._running) {
+      if (effect.scheduler) {
+        effect.scheduler()
+      }
     }
   }
 }
@@ -68,8 +70,9 @@ function preCleanEffect(effect) {
 class ReactiveEffect {
   public active = true; //创建的effect是响应式的
   _trackId = 0; //用于跟踪依赖
-  public deps = []; //effect的依赖列表
-  public _depsLength = 0; //effect的依赖列表长度
+  deps = []; //effect的依赖列表
+  _depsLength = 0; //effect的依赖列表长度
+  _running = 0;
   constructor(public fn, public scheduler) { }
 
   run() {
@@ -81,8 +84,10 @@ class ReactiveEffect {
     try {
       activeEffect = this
       preCleanEffect(this) // 执行effect之前，清理依赖
+      this._running++
       return this.fn()
     } finally {
+      this._running--
       postCleanEffect(this)
       activeEffect = lastEffect
     }
@@ -92,3 +97,4 @@ class ReactiveEffect {
     //
   }
 }
+
