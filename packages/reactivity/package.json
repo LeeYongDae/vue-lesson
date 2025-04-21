@@ -1,0 +1,19 @@
+{
+  "name": "@vue-lesson/reactivity",
+  "version": "1.0.0",
+  "main": "index.js",
+  "module": "dist/reactivity.esm-bundler.js",
+  "type": "module",
+  "dependencies": {
+    "@vue-lesson/shared": "workspace:^"
+  },
+  "buildOptions": {
+    "name": "VueReactivity",
+    "formats": [
+      "esm-bundler",
+      "esm-browser",
+      "cjs",
+      "global"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@vue-lesson/shared",
+  "version": "1.0.0",
+  "main":"index.js",
+  "modlue":"dist/shared.esm-bundler.js",
+  "buildOptions": {
+    "formats": [
+      "esm-bundler",
+      "cjs"
+    ]
+  }
+}
